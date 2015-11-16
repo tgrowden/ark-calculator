@@ -1,0 +1,17 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+.fullWidth {width: 100%;}
+.contentCont {padding-top: 15px; padding-bottom: 15px;}
+tr:nth-child(odd) {
+  background: #CCC
+}
+
+tr:nth-child(even) {
+  background: #FFF
+}
+#dinoDropdown{text-transform: capitalize;}
