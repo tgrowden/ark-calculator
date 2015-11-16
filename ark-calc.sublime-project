@@ -2,7 +2,46 @@
 	"folders":
 	[
 		{
-			"path": "public"
+			"path": "."
 		}
-	]
+	],
+	"settings":
+	{
+		"rsync_ssh":
+		{
+			"excludes":
+			[
+				".git*",
+				"_build",
+				"blib",
+				"Build"
+			],
+			"options":
+			[
+				"--delete"
+			],
+			"remotes":
+			{
+				"/home/taylor/ark-calc":
+				[
+					{
+						"enabled": 1,
+						"excludes":
+						[
+						],
+						"options":
+						[
+						],
+						"remote_host": "sn0ggle.duckdns.org",
+						"remote_path": "/home/taylor/ark",
+						"remote_port": 22,
+						"remote_post_command": "",
+						"remote_pre_command": "",
+						"remote_user": "taylor"
+					}
+				]
+			},
+			"sync_on_save": true
+		}
+	}
 }
