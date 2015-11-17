@@ -15,3 +15,12 @@ tr:nth-child(even) {
   background: #FFF
 }
 #dinoDropdown{text-transform: capitalize;}
+.mainContent {margin-left: 10%; margin-right: 10%; max-width: 100%;}
+#statsTable {max-width: 100%;}
+
+#statsTable, th, td {
+   border: 1px solid black;
+}
+#statsTable thead {   text-align: center;}
+
+#statsTable td>input {text-align: right; }

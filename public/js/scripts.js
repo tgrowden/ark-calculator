@@ -6,16 +6,13 @@
     
     var $table = $("#statsTable");
     
-    var multipliers = [
+    /*var multipliers = [
       0.27,
       0.1,
       0.04,
       0.1
-    ];
-
-    function selectionChange() {
-      var dinoSelection = $('#dinoDropdown').find(":selected").text();
-    }
+    ]; */
+    var multipliers = [];
 
     //populate information
     $.getJSON( "/stats", function( data ) {
@@ -25,12 +22,40 @@
       });
       $( "<select/>", {
         "id": "dinoDropdown",
-        "onchange": "selectionChange()",
         html: items.join( "" )
       }).prependTo( "#dropdownCont" );
     });
 
+
     var calculate = function calculate(row){
+      var dinoSelection = $('#dinoDropdown').find(":selected").text();
+      console.log(dinoSelection);
+
+      $.getJSON( "/stats", function( data ) {
+          var items = [];
+          $.each( data, function( key, val ) {
+            if (val.dino == dinoSelection){
+              items.push(val.health, val.stamina, val.weight, val.damage, val.speed);
+              var $healthRow = $($table.find("tr.data")[0]);
+              var $healthOutput = $($healthRow.find("td")[3]);
+              $healthOutput.html(items[0]);
+
+              var $staminaRow = $($table.find("tr.data")[1]);
+              var $staminaOutput = $($staminaRow.find("td")[3]);
+              $staminaOutput.html(items[1]);
+
+              var $weightRow = $($table.find("tr.data")[2]);
+              var $weightOutput = $($weightRow.find("td")[3]);
+              $weightOutput.html(items[2]);
+
+              var $damageRow = $($table.find("tr.data")[3]);
+              var $damageOutput = $($damageRow.find("td")[3]);
+              $damageOutput.html(items[3]);
+
+            }
+          });
+        });
+
 
       var $row = $($table.find("tr.data")[row]);
       
@@ -42,10 +67,10 @@
       
       var output = (input * multipliers[row]).toFixed(1);
       
-      var $baseOutput = $($row.find("td")[2]);
+      var $baseOutput = $($row.find("td")[4]);
       $baseOutput.html(output);
       
-      var $lvlInput = $($row.find("td")[3]);
+      var $lvlInput = $($row.find("td")[2]);
       var lvl = $lvlInput.find("input").first().val();
       
       if(typeof lvl === "undefined")
@@ -54,7 +79,7 @@
       var maxStats = lvl * output;
         var input = parseInt(input);
       var maxStats = (maxStats + input);
-      var $statsOutput = $($row.find("td")[4]);
+      var $statsOutput = $($row.find("td")[5]);
       $statsOutput.html((maxStats).toFixed(1));
     };
    
@@ -69,32 +94,3 @@
   });
   
 })();
-
-/*
-$.getJSON( "/stats", function( data ) {
-      var items = [];
-      $.each( data, function( key, val ) {
-        var dino = val.dino;
-        var health = val.health;
-        var stamina = val.stamina;
-        var weight = val.weight;
-        var damage = val.damage;
-        var speed = val.speed;
-        var stats = [
-          dino,
-          health,
-          stamina,
-          weight,
-          damage,
-          speed
-        ];
-        var dinoSelection = $('#dinoDropdown').find(":selected").text();
-        if(dinoSelection == stats.indexOf(dino)) {
-          multipliers[0] = health;
-          console.log("health = " + health);
-        }
-      });
-      
-    });
-    */
-
