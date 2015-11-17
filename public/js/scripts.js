@@ -28,6 +28,7 @@
       var dinoSelection = $('#dinoDropdown').find(":selected").text();
       console.log(dinoSelection);
       
+      var items = [];
       $.each(stats, function(key, val) {
         if (val.dino == dinoSelection){
           items.push(val.health, val.stamina, val.weight, val.damage, val.speed);
