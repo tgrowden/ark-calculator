@@ -4,7 +4,7 @@
  * sudo npm install -g pm2
  * sudo rm -rf ~/.npm
  * npm init
- * npm install --save async lodash express pg knex body-parser fs
+ * npm install --save async lodash express pg knex body-parser request
  * 
  * Then to run the app:
  *
