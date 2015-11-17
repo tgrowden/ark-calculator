@@ -14,6 +14,7 @@
       stats = data.sort(function(a, b){
         return a.dino > b.dino;
       });
+      console.log("sorted", stats);
       var items = [];
       $.each( stats, function( key, val ) {
         dinoMap[val.dino] = val;
@@ -25,7 +26,7 @@
       });
       $select.prependTo( "#dropdownCont" );
       $select.change(renderStats);
-      
+
       $("#calculate").click(calculateAll);
       
     });
