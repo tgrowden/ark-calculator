@@ -7,7 +7,9 @@
     var $table = $("#statsTable"),
       stats = null,
       dinoMap = {},
-      selected = null;
+      selected = null,
+      lvlsApplied = [];
+      totalLevels = 0;
 
     //populate information
     $.getJSON( "/stats", function( data ) {
@@ -93,19 +95,37 @@
       if(typeof lvl === "undefined")
         return;
       
+
       var maxStats = lvl * output;
         var input = parseInt(input);
       var maxStats = (maxStats + input);
       var $statsOutput = $($row.find("td")[5]);
       $statsOutput.html((maxStats).toFixed(1));
+      lvl = parseInt(lvl);
+      lvlsApplied.push(lvl);
+
+
     };
    
     var calculateAll = function calculateAll(){
       $table.find("tr.data").each(function(idx){
         calculate(idx);
-      });
-    };
 
+      });
+      var total = 0;
+      $.each(lvlsApplied,function() {
+        total += this;
+      });
+      var $Row = $($table.find("tr.data")[5]);
+      var $lvlTotal = $($Row.find("td")[3]);
+      $lvlTotal.html((total));
+      total = 0;
+      lvlsApplied = [];
+
+    //return alert(total);
+
+    };
+    
   });
   
 })();
