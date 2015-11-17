@@ -65,7 +65,7 @@
       var dino = dinoMap[selected];
       
       if(!dino)
-        return alert("Invalid dino selected");
+        return alert("No dino selected");
       
       var $row = $($table.find("tr.data")[row]);
       var key = $row.find("td").first().text().toLowerCase();
@@ -79,7 +79,7 @@
       var output = (parseFloat(input) * parseFloat(dino[key]));
       
       if(isNaN(output))
-        return alert("Invalid number in " + key + " input.");
+        return;
       
       output = output.toFixed(1);
       
