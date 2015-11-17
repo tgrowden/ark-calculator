@@ -6,13 +6,12 @@
     
     var $table = $("#statsTable");
     
-    /*var multipliers = [
+    var multipliers = [
       0.27,
       0.1,
       0.04,
       0.1
-    ]; */
-    var multipliers = [];
+    ]; 
 
     //populate information
     $.getJSON( "/stats", function( data ) {
@@ -51,6 +50,10 @@
               var $damageRow = $($table.find("tr.data")[3]);
               var $damageOutput = $($damageRow.find("td")[3]);
               $damageOutput.html(items[3]);
+
+              var $speedRow = $($table.find("tr.data")[4]);
+              var $speedOutput = $($speedRow.find("td")[3]);
+              $speedOutput.html(items[4]);
 
             }
           });
