@@ -117,7 +117,7 @@
         total += this;
       });
       var $Row = $($table.find("tr.data")[5]);
-      var $lvlTotal = $($Row.find("td")[3]);
+      var $lvlTotal = $($Row.find("td")[2]);
       $lvlTotal.html((total));
       total = 0;
       lvlsApplied = [];
