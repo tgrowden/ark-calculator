@@ -5,32 +5,35 @@
   $(function(){
     
     var $table = $("#statsTable"),
-      stats = null;
+      stats = null,
+      dinoMap = {},
+      selected = null;
 
     //populate information
     $.getJSON( "/stats", function( data ) {
       stats = data;
       var items = [];
       $.each( data, function( key, val ) {
+        dinoMap[val.dino] = val;
         items.push( "<option id='" + key + "' value='" + val.dino + "'>" + val.dino + "</option>" );
       });
-      $( "<select/>", {
+      var $select = $( "<select/>", {
         "id": "dinoDropdown",
         html: items.join( "" )
-      }).prependTo( "#dropdownCont" );
+      });
+      $select.prependTo( "#dropdownCont" );
+      $select.change(renderStats);
       
       $("#calculate").click(calculateAll);
       
     });
-
-
-    var calculate = function calculate(row){
+    
+    var renderStats = function renderStats(){
       var dinoSelection = $('#dinoDropdown').find(":selected").text();
-      console.log(dinoSelection);
-      
       var items = [];
       $.each(stats, function(key, val) {
         if (val.dino == dinoSelection){
+          selected = val.dino;
           items.push(val.health, val.stamina, val.weight, val.damage, val.speed);
           var $healthRow = $($table.find("tr.data")[0]);
           var $healthOutput = $($healthRow.find("td")[3]);
@@ -52,9 +55,19 @@
           var $speedOutput = $($speedRow.find("td")[3]);
           $speedOutput.html(items[4]);
         }
-      });
+      });      
+    };
 
+    var calculate = function calculate(row){
+      var dinoSelection = $('#dinoDropdown').find(":selected").text();
+      console.log(dinoSelection);
+      var dino = dinoMap[dinoSelection];
+      
+      if(!dino)
+        return alert("Invalid dino selected");
+      
       var $row = $($table.find("tr.data")[row]);
+      var key = $row.find("td").first().text().toLowerCase();
       
       var $baseInput = $($row.find("td")[1]);
       var input = $baseInput.find("input").first().val();
@@ -62,7 +75,12 @@
       if(typeof input === "undefined")
         return;
       
-      var output = (input * multipliers[row]).toFixed(1);
+      var output = (parseFloat(input) * parseFloat(dino[key]));
+      
+      if(isNaN(output))
+        return alert("Invalid number in " + key + " input.");
+      
+      output = output.toFixed(1);
       
       var $baseOutput = $($row.find("td")[4]);
       $baseOutput.html(output);
