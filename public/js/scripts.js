@@ -59,9 +59,8 @@
     };
 
     var calculate = function calculate(row){
-      var dinoSelection = $('#dinoDropdown').find(":selected").text();
-      console.log(dinoSelection);
-      var dino = dinoMap[dinoSelection];
+      console.log("Calculating selected dino", selected);
+      var dino = dinoMap[selected];
       
       if(!dino)
         return alert("Invalid dino selected");
