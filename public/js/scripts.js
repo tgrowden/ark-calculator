@@ -11,9 +11,11 @@
 
     //populate information
     $.getJSON( "/stats", function( data ) {
-      stats = data;
+      stats = data.sort(function(a, b){
+        return a.dino > b.dino;
+      });
       var items = [];
-      $.each( data, function( key, val ) {
+      $.each( stats, function( key, val ) {
         dinoMap[val.dino] = val;
         items.push( "<option id='" + key + "' value='" + val.dino + "'>" + val.dino + "</option>" );
       });
