@@ -24,3 +24,4 @@ tr:nth-child(even) {
 #statsTable thead {   text-align: center;}
 
 #statsTable td>input {text-align: right; }
+.mainContent {padding-top: 20px;}
