@@ -25,3 +25,4 @@ tr:nth-child(even) {
 
 #statsTable td>input {text-align: right; }
 .mainContent {padding-top: 20px;}
+.warning {background-color:#F66;}

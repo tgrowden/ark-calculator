@@ -29,6 +29,38 @@
       $select.prependTo( "#dropdownCont" );
       $select.change(renderStats);
 
+      //Sort list
+      function sortlist(){
+       var cl = document.getElementById('dinoDropdown');
+       var clTexts = new Array();
+
+       for(i = 2; i < cl.length; i++){
+          clTexts[i-2] =
+              cl.options[i].text.toUpperCase() + "," +
+              cl.options[i].text + "," +
+              cl.options[i].value + "," +
+              cl.options[i].selected;
+       }
+       clTexts.sort();
+       for(i = 2; i < cl.length; i++){
+          var parts = clTexts[i-2].split(',');
+          cl.options[i].text = parts[1];
+          cl.options[i].value = parts[2];
+          if(parts[3] == "true"){
+              cl.options[i].selected = true;
+          }else{
+             cl.options[i].selected = false;
+          }
+       }
+      }
+      sortlist();
+      // End Sort list
+      $('#dinoDropdown')
+         .prepend($("<option></option>")
+         .attr("value","select")
+         .text("--Select a Dino--"));
+      $("select#dinoDropdown").val("select");
+
       $("#calculate").click(calculateAll);
       
     });
@@ -56,9 +88,9 @@
           var $damageOutput = $($damageRow.find("td")[3]);
           $damageOutput.html(items[3]);
 
-          var $speedRow = $($table.find("tr.data")[4]);
+/*          var $speedRow = $($table.find("tr.data")[4]);
           var $speedOutput = $($speedRow.find("td")[3]);
-          $speedOutput.html(items[4]);
+          $speedOutput.html(items[4]); */
         }
       });      
     };
@@ -112,18 +144,30 @@
         calculate(idx);
 
       });
+      // Get total of max levels applied
       var total = 0;
       $.each(lvlsApplied,function() {
         total += this;
       });
-      var $Row = $($table.find("tr.data")[5]);
+      var $Row = $($table.find("tr.data")[4]);
       var $lvlTotal = $($Row.find("td")[2]);
       $lvlTotal.html((total));
+
+      // Check is total applied is out of range based on limit
+      var lvlLimit = document.getElementById('lvlLimit').value;
+      if ( total > lvlLimit ){
+        $('#statsTable tr:nth-child(5) > td:nth-child(3)').addClass('warning');
+
+      } else{
+        if ($('#statsTable tr:nth-child(5) > td:nth-child(3)').hasClass('warning')){
+          $('#statsTable tr:nth-child(5) > td:nth-child(3)').removeClass('warning');
+        }
+      }
+
+
+      // zero out values so calculations are correct, even if no page reload
       total = 0;
       lvlsApplied = [];
-
-    //return alert(total);
-
     };
     
   });
