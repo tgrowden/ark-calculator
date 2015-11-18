@@ -16,7 +16,7 @@
       stats = data.sort(function(a, b){
         return a.dino > b.dino;
       });
-      console.log("sorted", stats);
+//      console.log("sorted", stats);
       var items = [];
       $.each( stats, function( key, val ) {
         dinoMap[val.dino] = val;
@@ -62,6 +62,14 @@
       $("select#dinoDropdown").val("select");
 
       $("#calculate").click(calculateAll);
+
+      // Allow pressing "Enter" key to calculate
+      $("input").keydown(function(event){
+          if(event.keyCode == 13){
+              calculateAll();
+              console.log("enter pressed");
+          }
+      });
       
     });
     
@@ -96,7 +104,7 @@
     };
 
     var calculate = function calculate(row){
-      console.log("Calculating selected dino", selected);
+//      console.log("Calculating selected dino", selected);
       var dino = dinoMap[selected];
       
       if(!dino)
